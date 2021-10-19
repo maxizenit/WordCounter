@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Linq;
 
 namespace WordCounter
 {
     class WordBase
     {
         private Dictionary<string, int> dictionary;
-        private SortedDictionary<int, SortedSet<string>> sortedDictionary;
 
         private void AddWord(string word)
         {
@@ -22,22 +22,9 @@ namespace WordCounter
             }
         }
 
-        private void ConvertDictionary()
-        {
-            foreach (KeyValuePair<string, int> pair in dictionary)
-            {
-                if (!sortedDictionary.ContainsKey(pair.Value))
-                {
-                    sortedDictionary.Add(pair.Value, new SortedSet<string>());
-                }
-                sortedDictionary[pair.Value].Add(pair.Key);
-            }
-        }
-
         public WordBase()
         {
             dictionary = new Dictionary<string, int>();
-            sortedDictionary = new SortedDictionary<int, SortedSet<string>>(new ReverseComparer());
         }
 
         public void ReadFile(string path)
@@ -67,35 +54,23 @@ namespace WordCounter
                 sb.Clear();
             }
             sr.Close();
-            ConvertDictionary();
+            dictionary = dictionary.OrderBy(pair => pair.Value).Reverse().ToDictionary(pair => pair.Key, pair => pair.Value);
         }
 
         public void Print()
         {
-            if (sortedDictionary.Count > 0)
+            foreach (KeyValuePair<string, int> pair in dictionary)
             {
-                foreach (KeyValuePair<int, SortedSet<string>> pair in sortedDictionary)
-                {
-                    foreach (string word in pair.Value)
-                    {
-                        Console.WriteLine("{0}: {1}", word, pair.Key);
-                    }                    
-                }
+                Console.WriteLine("{0}: {1}", pair.Key, pair.Value);
             }
         }
 
         public void WriteInFile(string path)
         {
             StreamWriter sw = new StreamWriter(path, false, Encoding.UTF8);
-            if (sortedDictionary.Count > 0)
+            foreach (KeyValuePair<string, int> pair in dictionary)
             {
-                foreach (KeyValuePair<int, SortedSet<string>> pair in sortedDictionary)
-                {
-                    foreach (string word in pair.Value)
-                    {
-                        sw.WriteLine("{0}: {1}", word, pair.Key);
-                    }
-                }
+                Console.WriteLine("{0}: {1}", pair.Key, pair.Value);
             }
             sw.Close();
         }
