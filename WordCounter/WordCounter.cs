@@ -64,14 +64,14 @@ namespace WordCounter
                 }
                 else if (stringBuilder.Length > 0)
                 {
-                    info.ConcurrentDictionary.AddOrUpdate(stringBuilder.ToString(), 1, (key, oldvalue) => oldvalue + 1);
+                    info.ConcurrentDictionary.AddOrUpdate(stringBuilder.ToString(), 1, (key, oldValue) => oldValue + 1);
                     stringBuilder.Clear();
                 }
             }
 
             if (stringBuilder.Length > 0)
             {
-                info.ConcurrentDictionary.AddOrUpdate(stringBuilder.ToString(), 1, (key, oldvalue) => oldvalue + 1);
+                info.ConcurrentDictionary.AddOrUpdate(stringBuilder.ToString(), 1, (key, oldValue) => oldValue + 1);
                 stringBuilder.Clear();
             }
         }

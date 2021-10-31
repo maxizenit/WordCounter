@@ -9,7 +9,7 @@ namespace WordCounter
     {
         static void Main(string[] args)
         {
-            Console.Write("Введите путь к входному файлу: ");
+            Console.Write("Введите путь к обрабатываемому файлу: ");
             string text = null;
 
             try
