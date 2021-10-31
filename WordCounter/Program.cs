@@ -7,6 +7,7 @@ namespace WordCounter
 {
     class Program
     {
+
         static void Main(string[] args)
         {
             Console.Write("Введите путь к обрабатываемому файлу: ");
@@ -37,24 +38,29 @@ namespace WordCounter
             if (Console.ReadLine().ToLower().StartsWith("y"))
             {
                 Console.Write("Введите название результирующего файла: ");
+                FileStream fs = null;
                 StreamWriter sw = null;
 
                 try
                 {
-                    sw = new StreamWriter(new FileStream(Console.ReadLine(), FileMode.Create), Encoding.UTF8);
+                    fs = new FileStream(Console.ReadLine(), FileMode.Create);
+                    sw = new StreamWriter(fs, Encoding.UTF8);
                 }
                 catch (IOException e)
                 {
+                    fs.Close();
                     sw.Close();
                     Console.WriteLine("Ошибка обработки файла!\nЧтобы выйти, нажмите Enter");
                     Console.ReadLine();
                     Environment.Exit(0);
                 }
-                
+
                 foreach (KeyValuePair<string, int> pair in dictionary)
                 {
                     sw.WriteLine("{0}: {1}", pair.Key, pair.Value);
                 }
+
+                fs.Close();
                 sw.Close();
             }
 
