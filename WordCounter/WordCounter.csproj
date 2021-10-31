@@ -44,7 +44,7 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WordBase.cs" />
+    <Compile Include="WordCounter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
 
 namespace WordCounter
 {
@@ -6,21 +9,56 @@ namespace WordCounter
     {
         static void Main(string[] args)
         {
-            WordBase wb = new WordBase();
-            Console.Write("Введите путь к обрабатываемому файлу: ");
-            wb.ReadFile(Console.ReadLine());
-            Console.Write("Вывести результат в консоли? (y/n): ");
-            if (Char.ToLower(Console.ReadLine()[0]) == 'y')
+            Console.Write("Введите путь к входному файлу: ");
+            string text = null;
+
+            try
             {
-                wb.Print();
+                text = File.ReadAllText(Console.ReadLine());
             }
+            catch (IOException e)
+            {
+                Console.WriteLine("Ошибка обработки файла!\nЧтобы выйти, нажмите Enter");
+                Console.ReadLine();
+                Environment.Exit(0);
+            }
+
+            Dictionary<string, int> dictionary = WordCounter.GetWordCount(text);
+            Console.Write("Вывести результат в консоль? (y/n): ");
+            if (Console.ReadLine().ToLower().StartsWith("y"))
+            {
+                foreach (KeyValuePair<string, int> pair in dictionary)
+                {
+                    Console.WriteLine("{0}: {1}", pair.Key, pair.Value);
+                }
+            }
+
             Console.Write("Вывести результат в файл? (y/n): ");
-            if (Char.ToLower(Console.ReadLine()[0]) == 'y')
+            if (Console.ReadLine().ToLower().StartsWith("y"))
             {
-                Console.Write("Введите путь к файлу с файлу с результатом: ");
-                wb.WriteInFile(Console.ReadLine());
+                Console.Write("Введите название результирующего файла: ");
+                StreamWriter sw = null;
+
+                try
+                {
+                    sw = new StreamWriter(new FileStream(Console.ReadLine(), FileMode.Create), Encoding.UTF8);
+                }
+                catch (IOException e)
+                {
+                    sw.Close();
+                    Console.WriteLine("Ошибка обработки файла!\nЧтобы выйти, нажмите Enter");
+                    Console.ReadLine();
+                    Environment.Exit(0);
+                }
+                
+                foreach (KeyValuePair<string, int> pair in dictionary)
+                {
+                    sw.WriteLine("{0}: {1}", pair.Key, pair.Value);
+                }
+                sw.Close();
             }
-            Console.Write("Нажмите Enter для выхода: ");
+
+            Console.WriteLine("Чтобы выйти, нажмите Enter");
             Console.ReadLine();
         }
     }
