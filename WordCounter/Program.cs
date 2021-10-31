@@ -7,7 +7,6 @@ namespace WordCounter
 {
     class Program
     {
-
         static void Main(string[] args)
         {
             Console.Write("Введите путь к обрабатываемому файлу: ");
