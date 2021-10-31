@@ -7,7 +7,6 @@ using System.Threading;
 
 namespace WordCounter
 {
-
     class WordCounter
     {
         private struct WordCounterInfo
