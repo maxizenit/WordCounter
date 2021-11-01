@@ -22,16 +22,19 @@ namespace WordCounter
         private static int[] GetPartPositions(string text)
         {
             int[] partPositions = new int[s_processorCount];
-            for (int i = 0; i < s_processorCount; ++i)
+            partPositions[0] = 0;
+
+            for (int i = 1; i < s_processorCount; ++i)
             {
                 partPositions[i] = (int)Math.Round((double)i / s_processorCount * text.Length);
+
                 if (partPositions[i] >= text.Length)
                 {
                     partPositions[i] = text.Length;
                     continue;
                 }
 
-                while (!Char.IsWhiteSpace(text[partPositions[i]]))
+                while (partPositions[i] < text.Length && !Char.IsWhiteSpace(text[partPositions[i]]))
                 {
                     ++partPositions[i];
                 }
