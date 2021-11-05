@@ -19,4 +19,4 @@
 3. Ввести "y" в диалоге, если необходим вывод результата в файл, а затем название файла
      
 ## Пример работы программы
-![Слова из файла "Гарри Поттер и узник Азкабана.txt"](https://github.com/maxizenit/WordCounter/blob/main/Screenshots/ConsoleResult.png)
+![Слова из файла "Гарри Поттер и узник Азкабана.txt"](https://github.com/maxizenit/WordCounter/blob/master/Screenshots/ConsoleResult.png)
